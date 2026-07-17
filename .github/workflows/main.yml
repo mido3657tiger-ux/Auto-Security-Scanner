@@ -1,0 +1,13 @@
+name: AutoSecurityCI
+
+on: [push]
+
+jobs:
+  scan-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Security Scanner
+        run: |
+          python3 scanner.py
+          python3 analyzer.py
