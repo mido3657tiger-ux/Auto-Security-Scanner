@@ -5,9 +5,19 @@ on: [push]
 jobs:
   scan-job:
     runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
     steps:
-      - uses: actions/checkout@v3
-      - name: Run Security Scanner
-        run: |
-          python3 scanner.py
-          python3 analyzer.py
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run AI Analyzer
+        run: python3 analyzer.py
